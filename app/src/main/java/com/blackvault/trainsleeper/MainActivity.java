@@ -101,13 +101,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        Location destintationGPSLocation = mLocationManager.getLastKnownLocation(mLocationProvider);
-        destintationGPSLocation.setLatitude(54.514054);
-        destintationGPSLocation.setLongitude(-6.045811);
+        Location destinationLocation = mLocationManager.getLastKnownLocation(mLocationProvider);
+        destinationLocation.setLatitude(54.514054);
+        destinationLocation.setLongitude(-6.045811);
 
 
         DistanceLocationService distanceLocationService = new DistanceLocationService();
-        double distanceBetweenTwoGPSPoints =  distanceLocationService.distanceBetweenTwoGPSPoints(location,destintationGPSLocation);
+        double distanceBetweenTwoGPSPoints =  distanceLocationService.distanceBetweenTwoGPSPoints(location,destinationLocation);
         boolean inRange =  distanceLocationService.inRange(distanceBetweenTwoGPSPoints,1000);
 
         //Prepare for formatted Text
