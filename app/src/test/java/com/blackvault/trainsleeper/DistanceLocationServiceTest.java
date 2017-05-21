@@ -13,7 +13,7 @@ public class DistanceLocationServiceTest {
     @Test
     public void withinRangeIsTrue() throws Exception {
         double distanceBetweenTwoPoints = 500.1234;
-        assertTrue("Distance true", locationService.inRange(distanceBetweenTwoPoints, distanceRangeInMeters));
+        assertTrue("Distance is True", locationService.inRange(distanceBetweenTwoPoints, distanceRangeInMeters));
     }
 
     @Test
