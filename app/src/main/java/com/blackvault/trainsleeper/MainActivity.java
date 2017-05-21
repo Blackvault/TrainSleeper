@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(Location currentLocation) {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -106,19 +106,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         destinationLocation.setLongitude(-6.045811);
 
 
-        DistanceLocationService distanceLocationService = new DistanceLocationService();
-        double distanceBetweenTwoGPSPoints =  distanceLocationService.distanceBetweenTwoGPSPoints(location,destinationLocation);
-        boolean inRange =  distanceLocationService.inRange(distanceBetweenTwoGPSPoints,1000);
-
-        //Prepare for formatted Text
-        DecimalFormat df = new DecimalFormat("#.0000");
-        String angleFormated = df.format(distanceBetweenTwoGPSPoints);
-
-        TextView metersText = (TextView) findViewById(R.id.range);
-        metersText.setText(angleFormated + " meters to Lisburn Station.");
+        DistanceLocationService distanceLocationService = new DistanceLocationServiceImpl();
+        boolean inRange =  distanceLocationService.nearDestination(currentLocation,destinationLocation,1000);
 
         TextView inRangeText = (TextView) findViewById(R.id.inRange);
-        inRangeText.setText("In range: " + String.valueOf(inRange));
+
+        inRangeText.setText(inRange ? "In range of Lisburn Station" : "Not in range of Lisburn Station");
 
     }
 

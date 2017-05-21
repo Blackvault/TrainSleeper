@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class DistanceLocationServiceTest {
 
-    DistanceLocationService locationService = new DistanceLocationService();
+    DistanceLocationService locationService = new DistanceLocationServiceImpl();
     int distanceRangeInMeters = 1000;
 
     @Test
@@ -21,8 +21,4 @@ public class DistanceLocationServiceTest {
         double distanceBetweenTwoPoints = 1500.1234;
         assertFalse("Distance is False", locationService.inRange(distanceBetweenTwoPoints, distanceRangeInMeters));
     }
-
-
-
-
 }
