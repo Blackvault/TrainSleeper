@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mDetector = new GestureDetectorCompat(this, new MyGestureListener(getBaseContext()));
+        mDetector = new GestureDetectorCompat(this, new NavigationGestureListener(getBaseContext()));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

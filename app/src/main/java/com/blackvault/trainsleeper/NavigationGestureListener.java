@@ -9,11 +9,11 @@ import android.widget.Toast;
  * Created by Blackvault on 22/05/2017.
  */
 
-public class MyGestureListener extends SimpleOnGestureListener {
+public class NavigationGestureListener extends SimpleOnGestureListener {
 
     private Context mCurrentContext;
 
-    public MyGestureListener(Context aBaseContext) {
+    public NavigationGestureListener(Context aBaseContext) {
         mCurrentContext = aBaseContext;
     }
 
