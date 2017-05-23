@@ -11,9 +11,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     private LocationManager mLocationManager;
     private String mLocationProvider;
-    private GestureDetectorCompat mDetector;
+    private GestureDetector mDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mDetector = new GestureDetectorCompat(this, new NavigationGestureListener(getBaseContext()));
+        mDetector = new GestureDetector(this, new SwipeNavigationGesture(getBaseContext()));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
