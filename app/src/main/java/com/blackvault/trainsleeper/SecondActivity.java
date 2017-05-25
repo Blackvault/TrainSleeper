@@ -2,7 +2,6 @@ package com.blackvault.trainsleeper;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -15,22 +14,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blackvault.trainsleeper.googleplaces.ParseResponse;
-import com.blackvault.trainsleeper.googleplaces.urlrequest.URLRequestBuilder;
-import com.blackvault.trainsleeper.googleplaces.PlacesTask;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-public class MainActivity extends AppCompatActivity implements LocationListener {
+public class SecondActivity extends AppCompatActivity implements LocationListener {
 
     private LocationManager mLocationManager;
     private String mLocationProvider;
@@ -39,9 +30,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_second);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Toast.makeText(getBaseContext(), "On Second", Toast.LENGTH_SHORT).show();
 
         mDetector = new GestureDetector(this, new SwipeNavigationGesture(getBaseContext()));
 
@@ -64,47 +57,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 return;
             }
             Location currentLocation = mLocationManager.getLastKnownLocation(mLocationProvider);
-
-            TextView inRangeText = (TextView) findViewById(R.id.inRange);
-
-
-            URLRequestBuilder urlRequestBuilder = new URLRequestBuilder();
-            StringBuilder urlString = new StringBuilder(urlRequestBuilder.buildRequest(currentLocation, "5000"));
-
-            String txtToScreen = "";
-            PlacesTask placesTask = new PlacesTask();
-            try {
-                String aReponseResult = placesTask.execute(urlString.toString()).get();
-             
-                ParseResponse parseResponse = new ParseResponse();
-
-                List<HashMap<String, String>> aResponseParse = parseResponse.execute(aReponseResult).get();
-
-
-                for (int i = 0; i < aResponseParse.size(); i++) {
-
-                    HashMap<String, String> currentPlace = aResponseParse.get(i);
-
-                    double lat = Double.parseDouble(currentPlace.get("lat"));
-
-                    double lng = Double.parseDouble(currentPlace.get("lng"));
-
-                    String stationName = currentPlace.get("place_name");
-
-                    String vicinity = currentPlace.get("vicinity");
-                    String rating = currentPlace.get("rating");
-
-                    txtToScreen = txtToScreen + "\nStation: " + stationName + "\nUser Rating: " + rating + "\nLat: " + lat + "\nLong: " + lng + "\nVicinity: " + vicinity;
-
-                }
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-
-            inRangeText.setText(txtToScreen);
             mLocationManager.requestLocationUpdates(mLocationProvider, 1500, 1, this);
 
 
@@ -117,13 +69,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event){
         this.mDetector.onTouchEvent(event);
-
-        if (true) {
-            Intent i = new Intent(getApplicationContext(), SecondActivity.class);
-            startActivity(i);
-        }
         return super.onTouchEvent(event);
     }
 
@@ -168,13 +115,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
 
         DistanceLocationService distanceLocationService = new DistanceLocationServiceImpl();
-        boolean inRange = distanceLocationService.nearDestination(currentLocation, destinationLocation, 1000);
+        boolean inRange =  distanceLocationService.nearDestination(currentLocation,destinationLocation,1000);
 
-        //   TextView inRangeText = (TextView) findViewById(R.id.inRange);
+        TextView inRangeText = (TextView) findViewById(R.id.inRange);
 
-        //   inRangeText.setText(inRange ? "In range of Lisburn Station" : "Not in range of Lisburn Station");
+        inRangeText.setText(inRange ? "In range of Lisburn Station" : "Not in range of Lisburn Station");
 
     }
+
 
 
     @Override

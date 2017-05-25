@@ -1,6 +1,8 @@
 package com.blackvault.trainsleeper;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -23,12 +25,16 @@ public class SwipeNavigationGesture implements OnGestureListener {
 
         Toast.makeText(mCurrentContext, "onFling", Toast.LENGTH_SHORT).show();
 
-        if (aEventOne.getX() < aEventTwo.getX())
+        if (aEventOne.getX() < aEventTwo.getX()) {
             Toast.makeText(mCurrentContext, "Left to Right Swap Performed", Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(mCurrentContext, "Right to Left Swap Performed", Toast.LENGTH_LONG).show();
+            return true;
 
-        return true;
+        }
+
+        else {
+            Toast.makeText(mCurrentContext, "Right to Left Swap Performed", Toast.LENGTH_LONG).show();
+            return false;
+        }
     }
 
     @Override
