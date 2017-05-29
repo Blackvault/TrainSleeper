@@ -14,7 +14,7 @@ class Station {
         this.latitude = latitude;
     }
 
-    public void setLongitdue(double longitdue) {
+    public void setLongitude(double longitdue) {
         this.longitdue = longitdue;
     }
 

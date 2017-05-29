@@ -25,7 +25,7 @@ public class URLRequestBuilder {
         stringBuilder.append("&radius=" + aSearchRaduis );
         stringBuilder.append("&types=train_station");
         stringBuilder.append("&sensor=true");
-        stringBuilder.append("&key=GooglePlaceAPIKey");
+        stringBuilder.append("&key=GoogleAPIKey");
 
         return stringBuilder;
     }

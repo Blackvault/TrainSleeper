@@ -24,15 +24,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blackvault.trainsleeper.googleplaces.ParseResponse;
-import com.blackvault.trainsleeper.googleplaces.urlrequest.URLRequestBuilder;
-import com.blackvault.trainsleeper.googleplaces.PlacesTask;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
@@ -75,11 +67,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
             TextView inRangeText = (TextView) findViewById(R.id.inRange);
 
-            NearestStationHelper stationHelper = new NearestStationHelper();
+            NearestStationHelper stationHelper = new NearestStationHelper(5000);
+           // stationHelper.setAnInt(2000);
 
             String txtToScreen = "";
 
-            List<Station> aResponseParse = stationHelper.Nearest(currentLocation);
+            List<Station> aResponseParse = stationHelper.retrieveStation(currentLocation);
 
             for (int i = 0; i < aResponseParse.size(); i++) {
 

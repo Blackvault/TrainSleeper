@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.blackvault.trainsleeper.googleplaces.urlrequest.IURLRetriever;
 import com.blackvault.trainsleeper.googleplaces.urlrequest.MockURLRetriever;
+import com.blackvault.trainsleeper.googleplaces.urlrequest.URLRetriever;
 
 /**
  * Created by Blackvault on 24/05/2017.

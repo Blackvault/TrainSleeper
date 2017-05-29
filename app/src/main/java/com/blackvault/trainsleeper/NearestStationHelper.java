@@ -1,6 +1,7 @@
 package com.blackvault.trainsleeper;
 
 import android.location.Location;
+import android.support.annotation.NonNull;
 
 import com.blackvault.trainsleeper.googleplaces.ParseResponse;
 import com.blackvault.trainsleeper.googleplaces.PlacesTask;
@@ -17,36 +18,40 @@ import java.util.concurrent.ExecutionException;
 
 class NearestStationHelper {
 
-    public List<Station> Nearest(Location aCurrentLoaction) {
+    public NearestStationHelper(int anInt) {
+        this.anInt = anInt;
+    }
+
+    public int getAnInt() {
+        return anInt;
+    }
+
+    public void setAnInt(int anInt) {
+        this.anInt = anInt;
+    }
+
+    private int anInt;
+
+    public List<Station> retrieveStation(Location aCurrentLoaction) {
 
         List<Station> stations = new ArrayList<>();
         URLRequestBuilder urlRequestBuilder = new URLRequestBuilder();
-        StringBuilder urlString = new StringBuilder(urlRequestBuilder.buildRequest(aCurrentLoaction, "5000"));
+
+        StringBuilder urlString = new StringBuilder(urlRequestBuilder.buildRequest(aCurrentLoaction, Integer.toString(anInt)));
         PlacesTask placesTask = new PlacesTask();
 
         try {
-            String aReponseResult = placesTask.execute(urlString.toString()).get();
+            String responseResult = placesTask.execute(urlString.toString()).get();
 
             ParseResponse parseResponse = new ParseResponse();
 
-            List<HashMap<String, String>> aResponseParse = parseResponse.execute(aReponseResult).get();
+            List<HashMap<String, String>> responseList = parseResponse.execute(responseResult).get();
 
-            for (int i = 0; i < aResponseParse.size(); i++) {
+            for (int i = 0; i < responseList.size(); i++) {
 
-                Station station = new Station();
+                Station newStation = constructStation(responseList, i);
 
-                HashMap<String, String> currentPlace = aResponseParse.get(i);
-
-                double lat = Double.parseDouble(currentPlace.get("lat"));
-                station.setLatitude(lat);
-
-                double lng = Double.parseDouble(currentPlace.get("lng"));
-                station.setLongitdue(lng);
-
-                String stationName = currentPlace.get("place_name");
-                station.setName(stationName);
-
-                stations.add(station);
+                stations.add(newStation);
             }
 
         } catch (InterruptedException e) {
@@ -56,5 +61,23 @@ class NearestStationHelper {
         }
 
         return stations;
+    }
+
+    @NonNull
+    private Station constructStation(List<HashMap<String, String>> aResponseParse, int i) {
+
+        Station station = new Station();
+
+        HashMap<String, String> stationHash = aResponseParse.get(i);
+
+        double latitude = Double.parseDouble(stationHash.get("lat"));
+        station.setLatitude(latitude);
+
+        double longitude = Double.parseDouble(stationHash.get("lng"));
+        station.setLongitude(longitude);
+
+        station.setName(stationHash.get("place_name"));
+
+        return station;
     }
 }
