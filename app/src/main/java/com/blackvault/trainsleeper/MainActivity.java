@@ -19,6 +19,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,8 @@ import com.blackvault.trainsleeper.googleplaces.ParseResponse;
 import com.blackvault.trainsleeper.googleplaces.urlrequest.URLRequestBuilder;
 import com.blackvault.trainsleeper.googleplaces.PlacesTask;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -42,6 +46,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+         AutoCompleteTextView actv;
+        actv = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView1);
 
         mDetector = new GestureDetector(this, new SwipeNavigationGesture(getBaseContext()));
 
@@ -67,46 +75,36 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
             TextView inRangeText = (TextView) findViewById(R.id.inRange);
 
-
-            URLRequestBuilder urlRequestBuilder = new URLRequestBuilder();
-            StringBuilder urlString = new StringBuilder(urlRequestBuilder.buildRequest(currentLocation, "5000"));
+            NearestStationHelper stationHelper = new NearestStationHelper();
 
             String txtToScreen = "";
-            PlacesTask placesTask = new PlacesTask();
-            try {
-                String aReponseResult = placesTask.execute(urlString.toString()).get();
-             
-                ParseResponse parseResponse = new ParseResponse();
 
-                List<HashMap<String, String>> aResponseParse = parseResponse.execute(aReponseResult).get();
+            List<Station> aResponseParse = stationHelper.Nearest(currentLocation);
 
+            for (int i = 0; i < aResponseParse.size(); i++) {
 
-                for (int i = 0; i < aResponseParse.size(); i++) {
+                Station currentPlace = aResponseParse.get(i);
 
-                    HashMap<String, String> currentPlace = aResponseParse.get(i);
+                double lat = currentPlace.getLatitude();
 
-                    double lat = Double.parseDouble(currentPlace.get("lat"));
+                double lng = currentPlace.getLongtide();
 
-                    double lng = Double.parseDouble(currentPlace.get("lng"));
+                String stationName = currentPlace.getName();
 
-                    String stationName = currentPlace.get("place_name");
+                txtToScreen = txtToScreen + "\nStation: " + stationName + "\nLat: " + lat + "\nLong: " + lng;
 
-                    String vicinity = currentPlace.get("vicinity");
-                    String rating = currentPlace.get("rating");
-
-                    txtToScreen = txtToScreen + "\nStation: " + stationName + "\nUser Rating: " + rating + "\nLat: " + lat + "\nLong: " + lng + "\nVicinity: " + vicinity;
-
-                }
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
             }
+
 
             inRangeText.setText(txtToScreen);
             mLocationManager.requestLocationUpdates(mLocationProvider, 1500, 1, this);
 
+
+            String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                    (this, android.R.layout.simple_list_item_1, languages);
+            actv.setAdapter(adapter);
 
             if (currentLocation != null)
                 onLocationChanged(currentLocation);
