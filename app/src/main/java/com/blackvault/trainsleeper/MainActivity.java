@@ -9,21 +9,20 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
@@ -31,28 +30,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private LocationManager mLocationManager;
     private String mLocationProvider;
     private GestureDetector mDetector;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private static String LOG_TAG = "CardViewActivity";
+    private RecyclerView.LayoutManager mLayoutManager;
+    List<Station> aResponseParse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_card_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-         AutoCompleteTextView actv;
-        actv = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView1);
-
-        mDetector = new GestureDetector(this, new SwipeNavigationGesture(getBaseContext()));
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
@@ -65,39 +54,23 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
             Location currentLocation = mLocationManager.getLastKnownLocation(mLocationProvider);
 
-            TextView inRangeText = (TextView) findViewById(R.id.inRange);
+            NearestStationHelper stationHelper = new NearestStationHelper(1000);
+            stationHelper.setSearchRadius(5000);
 
-            NearestStationHelper stationHelper = new NearestStationHelper(5000);
-           // stationHelper.setAnInt(2000);
+            aResponseParse = stationHelper.retrieveStation(currentLocation);
 
-            String txtToScreen = "";
-
-            List<Station> aResponseParse = stationHelper.retrieveStation(currentLocation);
-
-            for (int i = 0; i < aResponseParse.size(); i++) {
-
-                Station currentPlace = aResponseParse.get(i);
-
-                double lat = currentPlace.getLatitude();
-
-                double lng = currentPlace.getLongtide();
-
-                String stationName = currentPlace.getName();
-
-                txtToScreen = txtToScreen + "\nStation: " + stationName + "\nLat: " + lat + "\nLong: " + lng;
-
-            }
+            mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+            mRecyclerView.setHasFixedSize(false);
+            mLayoutManager = new LinearLayoutManager(this);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mAdapter = new MyRecyclerViewAdapter(getDataSet(aResponseParse, currentLocation));
 
 
-            inRangeText.setText(txtToScreen);
+            mRecyclerView.setAdapter(mAdapter);
+
+
             mLocationManager.requestLocationUpdates(mLocationProvider, 1500, 1, this);
 
-
-            String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                    (this, android.R.layout.simple_list_item_1, languages);
-            actv.setAdapter(adapter);
 
             if (currentLocation != null)
                 onLocationChanged(currentLocation);
@@ -105,6 +78,38 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 Toast.makeText(getBaseContext(), "No Location Provider Found distanceBetweenTwoGPSPoints Your Code", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((MyRecyclerViewAdapter) mAdapter).setOnItemClickListener(new MyRecyclerViewAdapter
+                .MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Log.i(LOG_TAG, " Clicked on Item " + position);
+            }
+        });
+    }
+
+    private ArrayList<Station> getDataSet(List<Station> aResponseParse, Location aCurrentLocation) {
+        ArrayList stations = new ArrayList<>();
+
+        DistanceLocationService distanceLocationService = new DistanceLocationServiceImpl();
+
+        for (int i = 0; i < aResponseParse.size(); i++) {
+
+            Location destinationLocation = new Location("");
+            destinationLocation.setLatitude(aResponseParse.get(i).getLatitude());
+            destinationLocation.setLongitude(aResponseParse.get(i).getLongtide());
+            double distanceBetweenLocations = distanceLocationService.distanceBetweenTwoGPSPoints(aCurrentLocation, destinationLocation);
+
+            Station station = new Station(aResponseParse.get(i).getName(), aResponseParse.get(i).getLatitude(), aResponseParse.get(i).getLongtide(), distanceBetweenLocations);
+
+
+            stations.add(i, station);
+        }
+        return stations;
     }
 
     @Override

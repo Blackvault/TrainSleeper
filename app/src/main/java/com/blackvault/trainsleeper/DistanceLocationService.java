@@ -11,4 +11,6 @@ interface DistanceLocationService {
     boolean nearDestination(Location currentLocation, Location destinationLocation, int distanceRange);
 
     boolean inRange(double distanceBetweenTwoPoints, int distanceRangeInMeters);
+
+    double distanceBetweenTwoGPSPoints(Location currentLocation, Location destinationLocation);
 }

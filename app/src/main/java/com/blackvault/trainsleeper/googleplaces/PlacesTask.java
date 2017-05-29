@@ -30,12 +30,6 @@ public class PlacesTask extends AsyncTask<String, Integer, String> {
     protected void onPostExecute(String aReponseResult) {
         ParseResponse parseResponse = new ParseResponse();
 
-       parseResponse.execute(aReponseResult);
+        parseResponse.execute(aReponseResult);
     }
-
-
 }
-
-
-
-

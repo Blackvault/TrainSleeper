@@ -18,26 +18,26 @@ import java.util.concurrent.ExecutionException;
 
 class NearestStationHelper {
 
-    public NearestStationHelper(int anInt) {
-        this.anInt = anInt;
+    private int mSearchRadius;
+
+    public NearestStationHelper(int aSearchRadius) {
+        this.mSearchRadius = aSearchRadius;
     }
 
-    public int getAnInt() {
-        return anInt;
+    public int getSearchRadius() {
+        return mSearchRadius;
     }
 
-    public void setAnInt(int anInt) {
-        this.anInt = anInt;
+    public void setSearchRadius(int aSearchRadius) {
+        this.mSearchRadius = aSearchRadius;
     }
-
-    private int anInt;
 
     public List<Station> retrieveStation(Location aCurrentLoaction) {
 
         List<Station> stations = new ArrayList<>();
         URLRequestBuilder urlRequestBuilder = new URLRequestBuilder();
 
-        StringBuilder urlString = new StringBuilder(urlRequestBuilder.buildRequest(aCurrentLoaction, Integer.toString(anInt)));
+        StringBuilder urlString = new StringBuilder(urlRequestBuilder.buildRequest(aCurrentLoaction, Integer.toString(mSearchRadius)));
         PlacesTask placesTask = new PlacesTask();
 
         try {

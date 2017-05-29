@@ -8,7 +8,7 @@ import android.location.Location;
 
 class DistanceLocationServiceImpl implements DistanceLocationService{
 
-    protected double distanceBetweenTwoGPSPoints(Location currentLocation, Location destinationLocation) {
+    public double distanceBetweenTwoGPSPoints(Location currentLocation, Location destinationLocation) {
 
         return destinationLocation.distanceTo(currentLocation);
     }
