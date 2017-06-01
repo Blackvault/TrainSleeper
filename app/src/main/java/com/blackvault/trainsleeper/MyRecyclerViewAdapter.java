@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
         .DataObjectHolder> {
 
     private static MyClickListener myClickListener;
-    private ArrayList<Station> mStationDataSet;
+    private static ArrayList<Station> mStationDataSet;
 
     public MyRecyclerViewAdapter(ArrayList<Station> aStationDataSet) {
         mStationDataSet = aStationDataSet;
@@ -85,6 +86,10 @@ public class MyRecyclerViewAdapter extends RecyclerView
         @Override
         public void onClick(View v) {
             myClickListener.onItemClick(getAdapterPosition(), v);
+
+            Station station = mStationDataSet.get(getAdapterPosition());
+            Toast.makeText(v.getContext(), "User Clicked on Station: " + station.getName(), Toast.LENGTH_LONG).show();
+
         }
     }
 }
