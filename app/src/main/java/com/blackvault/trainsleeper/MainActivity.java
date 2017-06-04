@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     private LocationManager mLocationManager;
     private String mLocationProvider;
-    private GestureDetector mDetector;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private static String LOG_TAG = "CardViewActivity";
@@ -42,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         setContentView(R.layout.activity_card_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
@@ -63,13 +64,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             mRecyclerView.setHasFixedSize(false);
             mLayoutManager = new LinearLayoutManager(this);
             mRecyclerView.setLayoutManager(mLayoutManager);
-            mAdapter = new MyRecyclerViewAdapter(getDataSet(aResponseParse, currentLocation));
+            mAdapter = new MyRecyclerViewAdapter(getApplicationContext(),getDataSet(aResponseParse, currentLocation));
 
 
             mRecyclerView.setAdapter(mAdapter);
 
 
-            mLocationManager.requestLocationUpdates(mLocationProvider, 1500, 1, this);
+            mLocationManager.requestLocationUpdates(mLocationProvider, 10000, 10, this);
 
 
             if (currentLocation != null)
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        this.mDetector.onTouchEvent(event);
+       // this.mDetector.onTouchEvent(event);
 
         if (true) {
             Intent i = new Intent(getApplicationContext(), SecondActivity.class);
