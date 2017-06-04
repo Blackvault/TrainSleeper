@@ -6,7 +6,7 @@ import android.location.Location;
  * Created by Blackvault on 28/05/2017.
  */
 
-class Station {
+public class Station {
 
     private double mLatitude;
     private double mLongitude;

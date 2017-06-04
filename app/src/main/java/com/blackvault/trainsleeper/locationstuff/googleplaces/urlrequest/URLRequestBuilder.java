@@ -1,8 +1,7 @@
-package com.blackvault.trainsleeper.googleplaces.urlrequest;
+package com.blackvault.trainsleeper.locationstuff.googleplaces.urlrequest;
 
 import android.location.Location;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 /**
  * Created by Blackvault on 24/05/2017.

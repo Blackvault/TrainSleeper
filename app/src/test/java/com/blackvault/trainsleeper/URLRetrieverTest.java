@@ -1,7 +1,7 @@
 package com.blackvault.trainsleeper;
 
-import com.blackvault.trainsleeper.googleplaces.urlrequest.MockURLRetriever;
-import com.blackvault.trainsleeper.googleplaces.urlrequest.IURLRetriever;
+import com.blackvault.trainsleeper.locationstuff.googleplaces.urlrequest.MockURLRetriever;
+import com.blackvault.trainsleeper.locationstuff.googleplaces.urlrequest.IURLRetriever;
 
 import junit.framework.Assert;
 

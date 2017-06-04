@@ -1,6 +1,6 @@
 package com.blackvault.trainsleeper;
 
-import com.blackvault.trainsleeper.googleplaces.urlrequest.URLRequestBuilder;
+import com.blackvault.trainsleeper.locationstuff.googleplaces.urlrequest.URLRequestBuilder;
 
 import junit.framework.Assert;
 

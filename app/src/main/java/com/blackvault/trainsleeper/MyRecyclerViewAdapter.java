@@ -20,11 +20,10 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
     private static MyClickListener myClickListener;
     private static ArrayList<Station> mStationDataSet;
-    private static Context context;
 
-    public MyRecyclerViewAdapter(Context context,ArrayList<Station> aStationDataSet) {
+    public MyRecyclerViewAdapter(ArrayList<Station> aStationDataSet) {
         mStationDataSet = aStationDataSet;
-        this.context = context;
+
     }
 
     public void setOnItemClickListener(MyClickListener myClickListener) {
@@ -93,7 +92,6 @@ public class MyRecyclerViewAdapter extends RecyclerView
             Station station = mStationDataSet.get(getAdapterPosition());
             Toast.makeText(v.getContext(), "User Clicked on Station: " + station.getName(), Toast.LENGTH_LONG).show();
 
-            JourneyThing journey = new JourneyThing(context,station);
 
         }
     }

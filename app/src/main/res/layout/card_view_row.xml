@@ -12,13 +12,11 @@
         android:layout_gravity="center"
         android:layout_margin="5dp"
         card_view:cardCornerRadius="2dp"
-        card_view:contentPadding="1dp"
-        android:background="?attr/colorPrimary">
+        card_view:contentPadding="1dp">
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="?attr/colorPrimary">
+            android:layout_height="fill_parent">
 
             <TextView
                 android:id="@+id/textStationName"

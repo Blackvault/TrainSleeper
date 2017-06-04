@@ -1,4 +1,4 @@
-package com.blackvault.trainsleeper.googleplaces;
+package com.blackvault.trainsleeper.locationstuff.googleplaces;
 
 import org.json.JSONArray;
 import org.json.JSONException;
