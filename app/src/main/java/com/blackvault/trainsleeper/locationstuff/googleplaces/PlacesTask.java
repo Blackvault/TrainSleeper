@@ -1,10 +1,10 @@
-package com.blackvault.trainsleeper.googleplaces;
+package com.blackvault.trainsleeper.locationstuff.googleplaces;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.blackvault.trainsleeper.googleplaces.urlrequest.IURLRetriever;
-import com.blackvault.trainsleeper.googleplaces.urlrequest.MockURLRetriever;
+import com.blackvault.trainsleeper.locationstuff.googleplaces.urlrequest.IURLRetriever;
+import com.blackvault.trainsleeper.locationstuff.googleplaces.urlrequest.MockURLRetriever;
 
 /**
  * Created by Blackvault on 24/05/2017.
@@ -29,12 +29,6 @@ public class PlacesTask extends AsyncTask<String, Integer, String> {
     protected void onPostExecute(String aReponseResult) {
         ParseResponse parseResponse = new ParseResponse();
 
-       parseResponse.execute(aReponseResult);
+        parseResponse.execute(aReponseResult);
     }
-
-
 }
-
-
-
-

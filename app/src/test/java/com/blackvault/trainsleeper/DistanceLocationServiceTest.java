@@ -1,5 +1,8 @@
 package com.blackvault.trainsleeper;
 
+import com.blackvault.trainsleeper.locationstuff.DistanceLocationService;
+import com.blackvault.trainsleeper.locationstuff.DistanceLocationServiceImpl;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

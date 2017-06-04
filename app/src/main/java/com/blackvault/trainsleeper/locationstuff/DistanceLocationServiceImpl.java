@@ -1,4 +1,4 @@
-package com.blackvault.trainsleeper;
+package com.blackvault.trainsleeper.locationstuff;
 
 import android.location.Location;
 
@@ -6,9 +6,9 @@ import android.location.Location;
  * Created by Blackvault on 16/05/2017.
  */
 
-class DistanceLocationServiceImpl implements DistanceLocationService{
+public class DistanceLocationServiceImpl implements DistanceLocationService{
 
-    protected double distanceBetweenTwoGPSPoints(Location currentLocation, Location destinationLocation) {
+    public double distanceBetweenTwoGPSPoints(Location currentLocation, Location destinationLocation) {
 
         return destinationLocation.distanceTo(currentLocation);
     }

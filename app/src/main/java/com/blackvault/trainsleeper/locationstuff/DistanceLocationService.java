@@ -1,4 +1,4 @@
-package com.blackvault.trainsleeper;
+package com.blackvault.trainsleeper.locationstuff;
 
 import android.location.Location;
 
@@ -6,9 +6,11 @@ import android.location.Location;
  * Created by Blackvault on 21/05/2017.
  */
 
-interface DistanceLocationService {
+public interface DistanceLocationService {
 
     boolean nearDestination(Location currentLocation, Location destinationLocation, int distanceRange);
 
     boolean inRange(double distanceBetweenTwoPoints, int distanceRangeInMeters);
+
+    double distanceBetweenTwoGPSPoints(Location currentLocation, Location destinationLocation);
 }

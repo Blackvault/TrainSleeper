@@ -1,4 +1,4 @@
-package com.blackvault.trainsleeper.googleplaces;
+package com.blackvault.trainsleeper.locationstuff.googleplaces;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -80,7 +80,7 @@ public class PlaceToJSONParser {
             place.put("lat", latitude);
             place.put("lng", longitude);
             place.put("reference", reference);
-            place.put("rating",rating);
+            place.put("rating", rating);
 
         } catch (JSONException e) {
             e.printStackTrace();

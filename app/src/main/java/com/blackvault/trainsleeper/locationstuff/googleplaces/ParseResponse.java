@@ -1,4 +1,4 @@
-package com.blackvault.trainsleeper.googleplaces;
+package com.blackvault.trainsleeper.locationstuff.googleplaces;
 
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;

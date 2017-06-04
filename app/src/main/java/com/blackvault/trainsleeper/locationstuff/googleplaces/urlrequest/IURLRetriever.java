@@ -1,4 +1,4 @@
-package com.blackvault.trainsleeper.googleplaces.urlrequest;
+package com.blackvault.trainsleeper.locationstuff.googleplaces.urlrequest;
 
 import java.io.IOException;
 

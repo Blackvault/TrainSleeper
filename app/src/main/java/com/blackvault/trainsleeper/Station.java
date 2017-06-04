@@ -1,36 +1,61 @@
 package com.blackvault.trainsleeper;
 
+import android.location.Location;
+
 /**
  * Created by Blackvault on 28/05/2017.
  */
 
-class Station {
+public class Station {
 
-    private double latitude;
-    private double longitdue;
-    private String name;
+    private double mLatitude;
+    private double mLongitude;
+    private String mName;
+    private double mDistanceFromCurrentLocation;
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+
+    public Station(String aName, double aLatitude, double aLongitude, double aDistanceFromCurrentLocation) {
+        this.mLatitude = aLatitude;
+        this.mLongitude = aLongitude;
+        this.mName = aName;
+        this.mDistanceFromCurrentLocation = aDistanceFromCurrentLocation;
     }
 
-    public void setLongitdue(double longitdue) {
-        this.longitdue = longitdue;
+    public Station(String aName, double aLatitude, double aLongitude) {
+        this.mLatitude = aLatitude;
+        this.mLongitude = aLongitude;
+        this.mName = aName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Station() {
+    }
+
+    public double getDistanceFromCurrentLocation() {
+        return mDistanceFromCurrentLocation;
+    }
+
+    public void setLongitude(double aLongitude) {
+        this.mLongitude = aLongitude;
     }
 
     public double getLatitude() {
-        return latitude;
+        return mLatitude;
+    }
+
+    public void setLatitude(double aLatitude) {
+        this.mLatitude = aLatitude;
     }
 
     public double getLongtide() {
-        return longitdue;
+        return mLongitude;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
+
+    public void setName(String aName) {
+        this.mName = aName;
+    }
+
 }
